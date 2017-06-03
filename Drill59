@@ -1,0 +1,33 @@
+'''
+DRILL
+1. Create a database table in RAM named Roster that includes the fields ‘Name’,
+‘Species’ and
+‘IQ’
+2. Populate your new table with the following values:
+1 Jean-Baptiste Zorg, Human, 122
+2 Korben Dallas, Meat Popsicle, 100
+3 Ak'not, Mangalore, -5
+3. Update the Species of Korben Dallas to be Human
+4. Display the names and IQs of everyone in the table who is classified as Human
+'''
+import sqlite3
+
+peepsValues=(
+    ("Jean-Baptiste", "Zorg", "Human", 122),
+    ("Korben", "Dallas", "Meat Popsicle",100),
+    ("Ak'not","", "Mangalore",-5)
+     )
+
+with sqlite3.connect('multipass.db')as connection:
+    c = connection.cursor()
+    c.execute("DROP TABLE IF EXISTS Peeps")
+    c.execute("CREATE TABLE Peeps(FirstName TEXT, LastName TEXT, Species TEXT, IQ INT)")
+    c.executemany("INSERT INTO Peeps VALUES(?,?,?,?)",peepsValues)
+    c.execute("UPDATE Peeps SET Species=? WHERE FirstName=? AND LastName=? AND IQ=?",("Human", "Korben", "Dallas", 100))
+
+with sqlite3.connect('multipass.db')as connection:
+    c = connection.cursor()
+    c.execute("SELECT FirstName, LastName, Species, IQ FROM Peeps WHERE IQ > 0")
+
+for row in c.fetchall():
+    print (row)
