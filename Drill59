@@ -27,7 +27,7 @@ with sqlite3.connect('multipass.db')as connection:
 
 with sqlite3.connect('multipass.db')as connection:
     c = connection.cursor()
-    c.execute("SELECT FirstName, LastName, Species, IQ FROM Peeps WHERE IQ > 0")
+    c.execute("SELECT FirstName, LastName, IQ FROM Peeps WHERE Species = 'Human'")
 
 for row in c.fetchall():
     print (row)
