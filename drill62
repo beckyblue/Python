@@ -1,0 +1,42 @@
+'''
+Using Python version 2.7
+Title: Datetime
+Scenario: The company you work for just opened two new branches. One is in New York City,
+the other in London. They need a very simple program to find out if the branches are open or
+closed based on the current time of the Headquarters here in Portland. The hours of both
+branches are 9:00AM - 9:00PM in their own time zone.
+What is asked of you:
+Create code that will use the current time of the Portland HQ to find out the time in the NYC &
+London branches, then compare that time with the branches hours to see if they are open or
+closed.
+'''
+
+import time
+import datetime
+
+pdxTime = datetime.datetime.now().strftime('%H:%M')
+
+
+pdxHour = int(pdxTime[0:2])
+minutes = pdxTime[3:5]
+
+
+nycHours = pdxHour+3
+if nycHours > 24:
+    nycHours -= 24
+    
+ldnHours = pdxHour+8
+if ldnHours > 24:
+    ldnHours -= 24
+
+nycOpen = 'currently open' 
+if (nycHours < 9 or nycHours > 21):
+    nycOpen = 'currently closed'
+
+ldnOpen = 'currently open' 
+if (ldnHours < 9 or ldnHours > 21):
+    ldnOpen = 'currently closed'    
+
+print 'Portland current time is: ' + str(pdxTime)+'.'
+print 'New York City current time is: ' + str(nycHours)+':'+ minutes +'. The branch is ' + nycOpen + '.'
+print 'London current time is: ' + str(ldnHours)+':'+ minutes +'. The branch is ' + ldnOpen + '.'
