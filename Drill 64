@@ -1,0 +1,45 @@
+'''
+Using Python version 2.7
+Title: Daily File Transfer
+
+Scenario: Your company's users create or edit a collection of text files
+throughout the day. These text files represent data about customer
+orders.
+
+Once per day, any files that are new, or that were edited within the
+previous 24 hours, must be sent to the home office.
+
+To facilitate this,these new or updated files need to be copied to a
+specific 'destination'folder on a computer, so that a special file transfer
+program can grab them and transfer them to the home office.
+
+'''
+import os
+import time
+import shutil
+
+
+
+def move_files(sourcePath, destPath):
+    source = os.listdir(sourcePath)
+    for files in source:
+                source_files = os.path.join(sourcePath, files)
+                dest_files = os.path.join(destPath, files)
+                modTime = os.path.getmtime(source_files)
+                currentTime = time.time()
+                before = currentTime - 86400
+
+                if files.endswith('.txt') and modTime > before:
+                    source_files = os.path.join(sourcePath, files)
+                    dest_files = os.path.join(destPath, files)
+                    shutil.copy(source_files,destPath)
+                    print ("Moved file:") + (os.path.join(files))+(" :to Home Office.")
+                
+
+def main():
+    src = '/Users/Student/Desktop/Shop A Orders'
+    dst = '/Users/Student/Desktop/Home Office'
+    move_files(src,dst)
+
+if __name__=='__main__':
+    main()
