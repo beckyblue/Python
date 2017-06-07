@@ -1,0 +1,71 @@
+'''
+Python 3.6.1
+Title: UI for File Transfer project
+
+Scenario: You recently created a script that will check a
+folder for new or modified files, and then copy those new
+or modified files to another location.
+
+Users are asking for a user interface to make using the
+script easier and more versatile.
+
+Desired features of the UI:
+
+ Allow the user to browse to and choose a specific folder
+that will contain the files to be checked daily.
+
+ Allow the user to browse to and choose a specific folder
+that will receive the copied files.
+
+ Allow the user to manually initiate the 'file check'
+process that is performed by the script.
+
+'''
+
+from tkinter import *
+from tkinter import ttk
+from tkinter.filedialog import askdirectory
+
+
+def selectFolder():
+    askdirectory()
+
+
+root = Tk()
+root.title('Daily File Transfer')
+root.resizable(False, False)
+root.configure()
+
+style = ttk.Style()
+style.configure('Instructions.TLabel', font = (12))
+
+
+#Main Frame w/ Steps
+frame1 = Frame(root, highlightbackground="black", highlightthickness=1, width=200, height=200, bd= 0)
+frame1.pack(padx=3, pady=5)
+Label(frame1, text = 'Transfer Files to Home Office',
+              font = ("Arial", 14)).grid(row = 0, column = 0, columnspan = 5)
+Label(frame1, text = "1- Click  'FILES FROM'  button and choose folder to copy files from.",
+              font = ("Arial", 10)).grid(row = 1, column = 0, columnspan = 5, sticky = 'w')
+Label(frame1, text = "2- Click  'FILES TO'  button and choose foler that those files will be put into.",
+              font = ("Arial", 10)).grid(row = 2, column = 0, columnspan = 5, sticky = 'w')
+Label(frame1, text = "3- Click  'INITIATE'  button to move files into the transfer folder.",
+              font = ("Arial", 10)).grid(row = 3, column = 0, columnspan = 5, sticky = 'w')
+Label(frame1, text = "   *Files will be checked for new and updated files",
+              font = ("Times", 9)).grid(row = 4, column = 0, columnspan = 5, sticky = 'w')
+
+
+#Select Main Folder and a Destination Folder to check and copy over
+frame2 = Frame(root)
+frame2.pack(padx=0, pady=5)
+sourceButton = Button(frame2, text = 'FILES FROM', command = selectFolder).grid(row = 1, column = 0)
+Entry(frame2).grid(row = 1, column = 3)
+destButton = Button(frame2, text = '   FILES TO  ', command = selectFolder).grid(row = 3, column = 0)
+Entry(frame2).grid(row = 3, column = 3)
+
+
+#Initiate File Check
+frame3 = Frame(root)
+frame3.pack(padx= 0, pady=5)
+Button(frame3, text = 'INITIATE').grid(row = 0, column = 0)
+
